@@ -119,7 +119,7 @@
 		function date(){
 			d= new Date();
 			x=d.getDate();
-			y=d.getMonth();
+			y=d.getMonth()+1;
 			z=d.getFullYear();
 			document.getElementById("date").innerHTML=document.getElementById("date").innerHTML+" "+x+" / "+y+" / "+z;
 		}
