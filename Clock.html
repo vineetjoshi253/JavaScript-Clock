@@ -1,0 +1,284 @@
+<!DOCTYPEhtml>
+<html>
+<head>
+	<title>Time Turners</title>
+	<link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+</head>
+<style type="text/css">
+	.canvas {
+	
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 500px;
+    float: center;
+}
+
+	body {
+    font-family: 'Sofia';font-size: 22px;
+}
+
+	.button{
+		 background-color: grey;
+  		 border: none;
+ 		 color: white;
+  		 padding: 10px 30px;
+  		 text-align: center;
+  		 font-size: 16px;
+  		 font-family: Sofia;
+  		 margin: 4px 2px;
+  		 opacity: 0.6;
+  		 transition: 0.3s;
+  		 display: inline-block;
+         text-decoration: none;
+  		cursor: pointer;
+	}
+	
+	.button:hover {opacity: 1}
+	.div:hover{opacity:1}
+
+	::placeholder{
+		color: white;
+		opacity: 0.3;
+	}
+
+	.WebContainer{
+    width: 100%;
+    height: auto;
+}
+.articles{
+    width:90%; /*Takes 90% width from WebContainer*/
+    height: auto;
+    margin: auto;
+} 
+</style>
+<body background="1.jpg">
+	
+	
+	<div>
+
+	<p id="date" style="font-family: Sofia;color:grey;text-align: left;float: left;">Date:</p>
+	<p id="demo" style="font-family: Sofia;color: grey;text-align: right;float: right;">Time:</p>	
+	
+	</div>
+	<canvas class="canvas" id="myCanvas1" width="400" height="400"></canvas>
+
+	<div>
+		<p id="day" style="font-family: Sofia;color:grey;text-align: center;float: center;">Day of Week:</p>
+		<p style="font-family: Sofia;color: grey;float: left;"><b>Stopwatch :  </b></p>
+		<p id="hey" style="float: left;font-family: Sofia;color: grey;"></p>
+		<button id="mybutton" class="button" onclick="start()" style="float: right;">Start</button>
+	</div>	
+	</br>
+	</br>
+	<div style="margin-left:0%;">
+		<p style="font-family: Sofia;color: grey;text-align: left;margin-left: 0%">Alert: Set Timer</p>
+		<input id="getsec" type="number" placeholder="Seconds" size="4" style="background-color: grey;color: white;text-decoration-color: white;"></input>
+		<button id="mybtn" type="numbers" class="button" onclick="begin()" style="float: right;">Start</button>
+	</div>
+
+	<p id="test" style="color: grey;font-size:50%;">Created by: Vineet Joshi. GitHub: @vineetjoshi253</p>
+	<script type="text/javascript">
+		date();
+		day();
+		document.getElementById("hey").innerHTML=" "+0+" : "+0+" : "+0;
+		
+		l=0;
+		function begin(){
+				usersec=document.getElementById("getsec").value;
+				k=setInterval(function(){time()}, 1000);
+			}
+
+		function time(){
+			l=l+1;
+			document.getElementById("mybtn").innerHTML="Reset";
+			document.getElementById("mybtn").onclick=Reset;
+			if (l==usersec) {
+					alert("Your timer has run out!!!");
+					clearInterval(k);
+					Reset();
+			}
+
+
+		}
+
+		function Reset()
+		{
+			document.getElementById("mybtn").placeholder="Seconds";
+			clearInterval(k);
+			document.getElementById("mybtn").innerHTML="Start";
+			document.getElementById("mybtn").onclick=begin;
+			
+
+		}
+
+
+
+		function date(){
+			d= new Date();
+			x=d.getDate();
+			y=d.getMonth();
+			z=d.getFullYear();
+			document.getElementById("date").innerHTML=document.getElementById("date").innerHTML+" "+x+" / "+y+" / "+z;
+		}
+		s=0;
+		m=0;
+		h=0;
+		function start()
+		{
+			document.getElementById("mybutton").innerHTML="Stop";
+			document.getElementById("mybutton").onclick=stop;
+			x=setInterval(function(){timer()}, 1000);
+		}
+
+		function stop()
+		{
+			clearInterval(x);
+			document.getElementById("mybutton").innerHTML="Start";
+			document.getElementById("mybutton").onclick=start;
+			if(s!=0)
+			{
+				s=1;
+			}
+		}
+
+		function timer(){
+			document.getElementById("hey").innerHTML=" "+h+" : "+m+" : "+s;
+			s=s+1;
+			if(s>=60)
+			{
+				s=0;
+				m=m+1;
+			}
+			if(m>=60)
+			{
+				m=0;
+				h=h+1;
+			}
+			
+		}
+
+		function day(){
+			d= new Date();
+			x=d.getDay();
+			if(x==1){
+				document.getElementById("day").innerHTML=document.getElementById("day").innerHTML+" Monday";	
+			}
+			else if(x==2){
+				document.getElementById("day").innerHTML=document.getElementById("day").innerHTML+" Tuesday";
+			}
+			
+			else if(x==3){
+				document.getElementById("day").innerHTML=document.getElementById("day").innerHTML+" Wednesday";
+			}
+			else if(x==4){
+				document.getElementById("day").innerHTML=document.getElementById("day").innerHTML+" Thrusday";
+			}
+			else if(x==5){
+				document.getElementById("day").innerHTML=document.getElementById("day").innerHTML+" Friday";
+			}
+			else if(x==6){
+				document.getElementById("day").innerHTML=document.getElementById("day").innerHTML+" Saturday";
+			}
+			else if(x==7){
+				document.getElementById("day").innerHTML=document.getElementById("day").innerHTML+" Sunday";
+			}
+		}
+		setInterval(function(){clocks()}, 1000);
+
+		function clocks(){
+			date=new Date();
+			hr=date.getHours();
+			min=date.getMinutes();
+			sec=date.getSeconds();
+			clock1(hr,min,sec);
+			clock2(hr,min,sec);
+
+		}
+		
+		function clock1(hr,min,sec){
+			document.getElementById("demo").innerHTML="Time: "+hr%12+" : "+min+" : "+sec;
+			
+		}
+
+		function clock2(hr,min,sec){
+			c=document.getElementById("myCanvas1");	
+			ctx=c.getContext("2d");
+			ctx.clearRect(0, 0, 400,400);
+			ctx.beginPath();
+			ctx.arc(200,200,110,0,360*Math.PI/180);
+			ctx.strokeStyle="white";
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.arc(200,200,4,0,360*Math.PI/180);
+			ctx.strokeStyle="white";
+			ctx.stroke();
+			
+
+
+			secAngle=(270+sec*6)%360;
+			ctx.beginPath();
+			ctx.arc(200,200,105,270*Math.PI/180,secAngle*Math.PI/180);
+			ctx.strokeStyle="white";
+			ctx.stroke();
+			minAngle=(270+min*6)%360;
+			ctx.beginPath();
+			ctx.arc(200,200,100,270*Math.PI/180,minAngle*Math.PI/180);
+			ctx.strokeStyle="white";
+			ctx.stroke();
+			hourAngle=(270+hr*30)%360;
+			ctx.beginPath();
+			ctx.arc(200,200,95,270*Math.PI/180,hourAngle*Math.PI/180);
+			ctx.strokeStyle="white";
+			ctx.stroke();
+
+			drawHands(ctx,200,200,secAngle,minAngle,hourAngle);
+			drawNumbers(ctx,200,200,secAngle,minAngle,hourAngle,sec,min,hr);
+		}
+
+		function drawNumbers(ctx,x1,y1,secAngle,minAngle,hourAngle,sec,min,hr){
+			x2=x1 + 140 * Math.cos(secAngle*Math.PI/180);
+			y2=y1 + 140 * Math.sin(secAngle*Math.PI/180);
+			ctx.font="15px Sofia";
+			ctx.fillStyle = "white";
+			ctx.fillText(sec,x2,y2);
+			x2=x1 + 70 * Math.cos(minAngle*Math.PI/180);
+			y2=y1 + 70 * Math.sin(minAngle*Math.PI/180);
+			ctx.font="15px Sofia";
+			ctx.fillStyle = "white";
+			ctx.fillText(min,x2,y2);
+			x2=x1 + 70 * Math.cos(hourAngle*Math.PI/180);
+			y2=y1 + 70 * Math.sin(hourAngle*Math.PI/180);
+			ctx.font="15px Sofia";
+			ctx.fillStyle = "white";
+			ctx.fillText(hr%12,x2,y2);
+			
+			
+
+		}
+		function drawHands(ctx,x1,y1,secAngle,minAngle,hourAngle)
+		{
+			secLen = 86;
+			minLen=60;
+			hourLen=50;
+			ctx.beginPath();
+			ctx.moveTo(x1, y1);
+			ctx.lineTo(x1 + secLen * Math.cos(secAngle*Math.PI/180),y1 + secLen * Math.sin(secAngle*Math.PI/180));
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.moveTo(x1, y1);
+			ctx.lineTo(x1 + minLen * Math.cos(minAngle*Math.PI/180),y1 + minLen * Math.sin(minAngle*Math.PI/180));
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.moveTo(x1, y1);
+			ctx.lineTo(x1 + hourLen * Math.cos(hourAngle*Math.PI/180),y1 + hourLen * Math.sin(hourAngle*Math.PI/180));
+			ctx.stroke();
+			
+		}
+
+	</script>
+	
+</body>
+</html>
